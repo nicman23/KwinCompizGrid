@@ -34,12 +34,15 @@ function newSlotPosition(workspace, client, action) {
 
 var previousClient;
 var previousAction;
+var previousFiguredAction;
 function move(workspace, action) {
   var client = workspace.activeClient;
   if (client.moveable) {
     newGeometry = newSlotPosition(workspace, client, action);
     if (client === previousClient && previousAction === action) {
       newGeometry = figureNewAction(workspace, client, action);
+    } else {
+      previousFiguredAction = false;
     }
     client.geometry = newGeometry;
   }
@@ -49,7 +52,8 @@ function move(workspace, action) {
 
 function figureNewAction(workspace, client, action) {
 
-  return newSlotPosition(workspace, client, action);;
+  previousFiguredAction = newAction
+  return newSlotPosition(workspace, client, newAction);;
 }
 
 function center(workspace) {
